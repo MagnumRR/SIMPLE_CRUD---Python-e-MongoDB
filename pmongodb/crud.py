@@ -19,3 +19,27 @@ def desconectar(con):
     # se existir a conexão é realizado o processo de desconectar do banco
     if con:
         con.close()
+
+# Funcionalidade listar os "documentos/registros" da tabela(coleção) "produtos"  
+def listar():
+    
+    # Chamar conexão
+    con = conectar()
+    
+    # Acessar a coleção específica
+    db = con.p_mongodb
+    
+    # Tratamento ao banco
+    try:
+        if db.produtos.count_documents({}) > 0:
+            # comando "find" - bscar itens/documentos na coleção
+            produtos = db.produtos.find()
+            
+            print('\t--------------------- PRODUTOS ---------------------\n')
+            print(tabulate(produtos, headers='keys', tablefmt="grid"))
+            print('------------------------------------------------------\n')
+        else:
+            print('\n>>> Não existem produtos cadastrados <<<')
+    except errors.PyMongoError as e:
+            print(f'\n>>> Erro ao acessar o banco: {e} <<<')
+    desconectar(con)            
