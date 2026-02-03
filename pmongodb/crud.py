@@ -13,3 +13,9 @@ def conectar():
     # Parâmetros de conexão com o MongoClient (local e porta)
     con = MongoClient('localhost', 27017)
     return con
+
+# Funcionalidade desconexão com o banco MongoDB
+def desconectar(con):
+    # se existir a conexão é realizado o processo de desconectar do banco
+    if con:
+        con.close()
