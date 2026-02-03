@@ -174,3 +174,36 @@ def deletar():
     except InvalidId as f:
         print(f'\n>>> Falha na conexão com o banco: {f} <<<')     
     desconectar(con)            
+
+# Funcionalidade Menu
+def menu():
+    # Painel, cuja as opções acionam as respectivas funcionalidades
+    print('========= PAINEL =========')
+    print('1 - Listar produtos.')
+    print('2 - Inserir produtos.')
+    print('3 - Atualizar produto.')
+    print('4 - Deletar produto.')
+    print('5 - Sair.')
+    print('===========================')
+    # Loop de processos
+    while True:
+        opcao = int(input('Opção >>>:  ')) # Usuário escolhe a opção desejada
+        if opcao in [1, 2, 3, 4, 5]:
+            if opcao == 1:
+                listar()
+            elif opcao == 2:
+                inserir()
+            elif opcao == 3:
+                atualizar()
+            elif opcao == 4:
+                deletar()
+            elif opcao == 5:
+                print('\n>>> Operação encerrada. <<<')
+                break
+            else:
+                print('\n>>> Opção inválida. Tente novamente: ') # Se inválida, retorna a opção
+            if input('Nova consulta (s- sim / n - não)?: ').lower() == 's': # Nova consulta ou finaliza
+                continue
+            else:
+                print('\n>>> Processo encerrado. <<<')
+                break 
