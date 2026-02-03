@@ -43,3 +43,33 @@ def listar():
     except errors.PyMongoError as e:
             print(f'\n>>> Erro ao acessar o banco: {e} <<<')
     desconectar(con)            
+
+# Funcionalidade inserir novos "documentos/registros" na tabela(coleção) "produtos"  
+def inserir():
+    print('------------ NOVO PRODUTO -------------')
+    # Chamar conexão
+    con = conectar()
+    
+    # Acessar a coleção específica
+    db = con.p_mongodb
+    
+    # Recebendo entrada do usuário
+    nome = input('Produto: ')
+    preco = float(input('Preço: '))
+    estoque = int(input('Quantidade: '))
+    
+    # Tratamento ao banco
+    try:
+        # Adicionando novo documento a coleção "produtos"
+        db.produtos.insert_one(
+            {
+                'nome': nome,
+                'preco': preco,
+                'estoque': estoque
+            }
+        )
+        print('------------------------------------')
+        print(f'\n>>> O produto {nome} foi adicionado com sucesso! <<<')
+    except errors.PyMongoError as e:
+       print(f'\n>>> Falha ao cadastrar o produto - {e} <<<')
+    desconectar(con)            
