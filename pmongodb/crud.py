@@ -160,7 +160,7 @@ def deletar():
                     }
                 )
                 # Conferência: se houver um registro excluído
-                print('Operação cancelada')    
+                  
                 if res.deleted_count == 1:
                     print('\n>>> O produto foi excluido com sucesso! <<<')
                 else:
