@@ -132,3 +132,45 @@ def atualizar():
     except InvalidId as f:
         print(f'\n>>> Falha na conexão com o banco: {f} <<<')            
     desconectar(con)         
+
+# Funcionalidade excluir "documentos/registros" na tabela(coleção) "produtos" 
+def deletar():
+    print('------------ EXCLUIR PRODUTO -------------')
+    # Chamar conexão
+    con = conectar()
+    
+    # Acessar a coleção específica
+    db = con.p_mongodb
+    
+    # Recebendo "Id" do usuário
+    _id = input('Informe o Id: ')
+    
+    # Atribuindo o nome do produto, conforme "_id"
+    cons = db.produtos.find_one({"_id": ObjectId(_id)})
+    # Atribuindo o valor da chave "nome"
+    nome = cons['nome']
+    # Tratamento ao excluir documentos (produtos)
+    try:
+        if cons:
+            # Confirmação de exclusão
+            if input(f'Deseja excluir o produto: {nome}? >>> ') == 's':
+                res = db.produtos.delete_one(
+                    {
+                        '_id': ObjectId(_id)
+                    }
+                )
+                # Conferência: se houver um registro excluído
+                print('Operação cancelada')    
+                if res.deleted_count == 1:
+                    print('\n>>> O produto foi excluido com sucesso! <<<')
+                else:
+                    print('\n>>> Não foi possível excluir o produto <<<')    
+            else:
+                print('\n>>> Exclusão cancelada! <<<')
+        else:
+            print('\n>>> Não há produtos a serem excluídos <<<')        
+    except errors.PyMongoError as e:
+        print(f'\n>>> Falha na conexão com o banco: {e} <<<')
+    except InvalidId as f:
+        print(f'\n>>> Falha na conexão com o banco: {f} <<<')     
+    desconectar(con)            
